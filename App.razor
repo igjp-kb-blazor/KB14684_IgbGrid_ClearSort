@@ -1,0 +1,56 @@
+﻿<div style="max-width: 900px; margin: auto; padding: 24px; display: flex; flex-direction: column; gap: 24px;">
+    <IgbGrid Data="_people"
+             Height="500px"
+             @ref="grid"
+             PrimaryKey="@nameof(Person.Id)"
+             AutoGenerate="false"
+             >
+        <IgbColumn Field="@nameof(Person.Id)" Header="ID" DataType="GridColumnDataType.Number" Width="auto" Sortable ></IgbColumn>
+        <IgbColumn Field="@nameof(Person.Name)" Header="氏名" Sortable Width="auto"></IgbColumn>
+        <IgbColumn Field="@nameof(Person.Age)" Header="年齢" DataType="GridColumnDataType.Number" Sortable Width="auto"></IgbColumn>
+        <IgbColumn Field="@nameof(Person.Country)" Header="国" Sortable ></IgbColumn>
+        <IgbColumn Field="@nameof(Person.City)" Header="都市" Sortable ></IgbColumn>
+    </IgbGrid>
+    <div>
+        <IgbButton @onclick="ClearIdSort">ID のソートをクリア</IgbButton>
+        <IgbButton @onclick="ClearALLSort">ソートをクリア</IgbButton>
+    </div>
+</div>
+
+@code {
+    private IgbGrid? grid;
+    private async Task ClearIdSort()
+    {
+        if (grid is null) return;
+        await grid.ClearSortAsync("Id");
+    }
+    private async Task ClearALLSort()
+    {
+        if (grid is null) return;
+        await grid.ClearSortAsync("");
+    }
+
+    public class Person
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        public string? Country { get; set; }
+        public string? City { get; set; }
+        public string? JobTitle { get; set; }
+    }
+
+    private List<Person> _people = new()
+{
+    new() { Id = 1, Name = "Alice", Age = 28, Country = "USA", City = "New York", JobTitle = "Engineer" },
+    new() { Id = 2, Name = "Bob", Age = 34, Country = "USA", City = "Miami", JobTitle = "Marketing" },
+    new() { Id = 2, Name = "Charlie", Age = 35, Country = "UK", City = "London", JobTitle = "Graphic Designer" },
+    new() { Id = 3, Name = "David", Age = 26, Country = "Japan", City = "Osaka", JobTitle = "Marketing" },
+    new() { Id = 3, Name = "Eva", Age = 27, Country = "Japan", City = "Nagoya", JobTitle = "Product Manager" },
+    new() { Id = 4, Name = "Frank", Age = 40, Country = "USA", City = "Los Angeles", JobTitle = "Engineer" },
+    new() { Id = 5, Name = "Grace", Age = 32, Country = "Japan", City = "Tokyo", JobTitle = "Teacher" },
+    new() { Id = 5, Name = "Hannah", Age = 40, Country = "Italy", City = "Rome", JobTitle = "Chef" },
+    new() { Id = 5, Name = "Ian", Age = 35, Country = "Spain", City = "Madrid", JobTitle = "Lawyer" },
+    new() { Id = 5, Name = "Jack", Age = 26, Country = "Japan", City = "Fukuoka", JobTitle = "Journalist" }
+};
+}
